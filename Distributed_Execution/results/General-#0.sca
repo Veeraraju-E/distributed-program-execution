@@ -1,0 +1,270 @@
+version 3
+run General-0-20250323-16:25:38-323870
+attr configname General
+attr datetime 20250323-16:25:38
+attr datetimef 20250323-162538
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Network_Setup
+attr processid 323870
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config network Network_Setup
+
+par Network_Setup.client[0].outClientGates[0].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[0].outClientGates[0].channel disabled false
+attr mutable ""
+par Network_Setup.client[0].outClientGates[0].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[0].outClientGates[1].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[0].outClientGates[1].channel disabled false
+attr mutable ""
+par Network_Setup.client[0].outClientGates[1].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[1].outClientGates[0].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[1].outClientGates[0].channel disabled false
+attr mutable ""
+par Network_Setup.client[1].outClientGates[0].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[1].outClientGates[1].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[1].outClientGates[1].channel disabled false
+attr mutable ""
+par Network_Setup.client[1].outClientGates[1].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[2].outClientGates[0].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[2].outClientGates[0].channel disabled false
+attr mutable ""
+par Network_Setup.client[2].outClientGates[0].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[2].outClientGates[1].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[2].outClientGates[1].channel disabled false
+attr mutable ""
+par Network_Setup.client[2].outClientGates[1].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[3].outClientGates[0].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[3].outClientGates[0].channel disabled false
+attr mutable ""
+par Network_Setup.client[3].outClientGates[0].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[3].outClientGates[1].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[3].outClientGates[1].channel disabled false
+attr mutable ""
+par Network_Setup.client[3].outClientGates[1].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[0].outServerGates[0].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[0].outServerGates[0].channel disabled false
+attr mutable ""
+par Network_Setup.client[0].outServerGates[0].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[0].outClientGates[0].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[0].outClientGates[0].channel disabled false
+attr mutable ""
+par Network_Setup.server[0].outClientGates[0].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[0].outServerGates[1].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[0].outServerGates[1].channel disabled false
+attr mutable ""
+par Network_Setup.client[0].outServerGates[1].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[1].outClientGates[0].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[1].outClientGates[0].channel disabled false
+attr mutable ""
+par Network_Setup.server[1].outClientGates[0].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[0].outServerGates[2].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[0].outServerGates[2].channel disabled false
+attr mutable ""
+par Network_Setup.client[0].outServerGates[2].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[2].outClientGates[0].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[2].outClientGates[0].channel disabled false
+attr mutable ""
+par Network_Setup.server[2].outClientGates[0].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[0].outServerGates[3].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[0].outServerGates[3].channel disabled false
+attr mutable ""
+par Network_Setup.client[0].outServerGates[3].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[3].outClientGates[0].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[3].outClientGates[0].channel disabled false
+attr mutable ""
+par Network_Setup.server[3].outClientGates[0].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[1].outServerGates[0].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[1].outServerGates[0].channel disabled false
+attr mutable ""
+par Network_Setup.client[1].outServerGates[0].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[0].outClientGates[1].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[0].outClientGates[1].channel disabled false
+attr mutable ""
+par Network_Setup.server[0].outClientGates[1].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[1].outServerGates[1].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[1].outServerGates[1].channel disabled false
+attr mutable ""
+par Network_Setup.client[1].outServerGates[1].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[1].outClientGates[1].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[1].outClientGates[1].channel disabled false
+attr mutable ""
+par Network_Setup.server[1].outClientGates[1].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[1].outServerGates[2].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[1].outServerGates[2].channel disabled false
+attr mutable ""
+par Network_Setup.client[1].outServerGates[2].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[2].outClientGates[1].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[2].outClientGates[1].channel disabled false
+attr mutable ""
+par Network_Setup.server[2].outClientGates[1].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[1].outServerGates[3].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[1].outServerGates[3].channel disabled false
+attr mutable ""
+par Network_Setup.client[1].outServerGates[3].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[3].outClientGates[1].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[3].outClientGates[1].channel disabled false
+attr mutable ""
+par Network_Setup.server[3].outClientGates[1].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[2].outServerGates[0].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[2].outServerGates[0].channel disabled false
+attr mutable ""
+par Network_Setup.client[2].outServerGates[0].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[0].outClientGates[2].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[0].outClientGates[2].channel disabled false
+attr mutable ""
+par Network_Setup.server[0].outClientGates[2].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[2].outServerGates[1].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[2].outServerGates[1].channel disabled false
+attr mutable ""
+par Network_Setup.client[2].outServerGates[1].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[1].outClientGates[2].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[1].outClientGates[2].channel disabled false
+attr mutable ""
+par Network_Setup.server[1].outClientGates[2].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[2].outServerGates[2].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[2].outServerGates[2].channel disabled false
+attr mutable ""
+par Network_Setup.client[2].outServerGates[2].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[2].outClientGates[2].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[2].outClientGates[2].channel disabled false
+attr mutable ""
+par Network_Setup.server[2].outClientGates[2].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[2].outServerGates[3].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[2].outServerGates[3].channel disabled false
+attr mutable ""
+par Network_Setup.client[2].outServerGates[3].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[3].outClientGates[2].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[3].outClientGates[2].channel disabled false
+attr mutable ""
+par Network_Setup.server[3].outClientGates[2].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[3].outServerGates[0].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[3].outServerGates[0].channel disabled false
+attr mutable ""
+par Network_Setup.client[3].outServerGates[0].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[0].outClientGates[3].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[0].outClientGates[3].channel disabled false
+attr mutable ""
+par Network_Setup.server[0].outClientGates[3].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[3].outServerGates[1].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[3].outServerGates[1].channel disabled false
+attr mutable ""
+par Network_Setup.client[3].outServerGates[1].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[1].outClientGates[3].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[1].outClientGates[3].channel disabled false
+attr mutable ""
+par Network_Setup.server[1].outClientGates[3].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[3].outServerGates[2].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[3].outServerGates[2].channel disabled false
+attr mutable ""
+par Network_Setup.client[3].outServerGates[2].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[2].outClientGates[3].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[2].outClientGates[3].channel disabled false
+attr mutable ""
+par Network_Setup.server[2].outClientGates[3].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[3].outServerGates[3].channel typename "\"ned.DelayChannel\""
+par Network_Setup.client[3].outServerGates[3].channel disabled false
+attr mutable ""
+par Network_Setup.client[3].outServerGates[3].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.server[3].outClientGates[3].channel typename "\"ned.DelayChannel\""
+par Network_Setup.server[3].outClientGates[3].channel disabled false
+attr mutable ""
+par Network_Setup.server[3].outClientGates[3].channel delay 1s
+attr mutable ""
+attr unit s
+par Network_Setup.client[0] typename "\"Client\""
+par Network_Setup.client[1] typename "\"Client\""
+par Network_Setup.client[2] typename "\"Client\""
+par Network_Setup.client[3] typename "\"Client\""
+par Network_Setup.server[0] typename "\"Server\""
+par Network_Setup.server[1] typename "\"Server\""
+par Network_Setup.server[2] typename "\"Server\""
+par Network_Setup.server[3] typename "\"Server\""
+par Network_Setup typename "\"Network_Setup\""
+
