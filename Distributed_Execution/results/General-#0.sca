@@ -1,8 +1,8 @@
 version 3
-run General-0-20250323-16:25:38-323870
+run General-0-20250327-11:49:35-567158
 attr configname General
-attr datetime 20250323-16:25:38
-attr datetimef 20250323-162538
+attr datetime 20250327-11:49:35
+attr datetimef 20250327-114935
 attr experiment General
 attr inifile omnetpp.ini
 attr iterationvars ""
@@ -10,7 +10,7 @@ attr iterationvarsd ""
 attr iterationvarsf ""
 attr measurement ""
 attr network Network_Setup
-attr processid 323870
+attr processid 567158
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -258,13 +258,13 @@ attr mutable ""
 par Network_Setup.server[3].outClientGates[3].channel delay 1s
 attr mutable ""
 attr unit s
-par Network_Setup.client[0] typename "\"Client\""
-par Network_Setup.client[1] typename "\"Client\""
-par Network_Setup.client[2] typename "\"Client\""
-par Network_Setup.client[3] typename "\"Client\""
 par Network_Setup.server[0] typename "\"Server\""
 par Network_Setup.server[1] typename "\"Server\""
 par Network_Setup.server[2] typename "\"Server\""
 par Network_Setup.server[3] typename "\"Server\""
+par Network_Setup.client[0] typename "\"Client\""
+par Network_Setup.client[1] typename "\"Client\""
+par Network_Setup.client[2] typename "\"Client\""
+par Network_Setup.client[3] typename "\"Client\""
 par Network_Setup typename "\"Network_Setup\""
 

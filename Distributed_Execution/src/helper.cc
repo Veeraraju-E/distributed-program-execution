@@ -96,9 +96,9 @@ vector<vector<string>> fetch_servers() {
     vector<vector<string>> servers;
     string line;
 
-    if (!file.is_open()) {
-        cout << "Error opening server_list.txt!" << endl;
-        return servers;
+    if(!file.is_open()){
+     cout << "Waiting for server file creation!" << endl;
+     return servers;
     }
 
 

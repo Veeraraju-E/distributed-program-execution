@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <omnetpp.h>
 
 using namespace std;
 
@@ -11,5 +12,32 @@ string create_server(int server_number);
 string create_client(int client_number);
 vector<vector<string>> fetch_servers();
 vector<vector<string>> fetch_clients();
+
+enum MessageType {
+    SUBTASK_REQUEST,
+    SUBTASK_RESPONSE,
+    SERVER_SCORES_UPDATE
+};
+
+struct SubtaskResult {
+       string subtask_id;
+       string server_id;
+       int result;
+       bool isWrongResult = false;
+       omnetpp::simtime_t timestamp;
+   };
+
+
+// Overall message
+struct Message {
+    MessageType type;
+    string client_id;
+    string subtask_id;
+    vector<int> data;
+    string msg_hash;
+    SubtaskResult subtaskresult;
+    bool isError = false;
+    map<string,float> sever_scores;
+};
 
 #endif
