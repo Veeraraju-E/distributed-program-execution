@@ -19,42 +19,29 @@ private:
     int my_server_number = 0;
     bool is_malicious = false;
     string my_id = "";
+    vector<vector<string>> clients_available = {};
 
-    // store history of subtask results
-    struct SubtaskResult {
-        string task_id;
-        vector<int> input;
-        int max_element;
-        simtime_t timestamp;
-    };
+//    // store history of subtask results
+//    struct SubtaskResult {
+//        string subtask_id;
+//        vector<int> input;
+//        int max_element;
+//        simtime_t timestamp;
+//    };
     vector<SubtaskResult> subtask_history;
-
-    // Enum for actual message content
-    enum MessageType {
-        SUBTASK_REQUEST,
-        SUBTASK_RESPONSE,
-        STATUS_UPDATE
-    };
-
-    // Overall message
-    struct Message {
-        MessageType type;
-        string client_id;
-        string task_id;
-        vector<int> data;
-    };
 
     // get info from message; GPT-genereated
     Message parse_message(const string& msg_content) {
+        // Message Format needed: <Message Type>:<client_id>:<sub_task_id>:<elements of array>(csv)
         Message msg;
         stringstream ss(msg_content);
         string token;
-
+        getline(ss,token,':');
         getline(ss, token, ':');    // at first ':', we stop and retrieve client_id
         msg.client_id = token;
 
         getline(ss, token, ':');    // from first to second ':', we retrieve task_id
-        msg.task_id = token;
+        msg.subtask_id = token;
 
         // fetch the vector data, starts after third ':'
         if(getline(ss, token, ':')) {
@@ -80,25 +67,35 @@ private:
         return arr[0]; // rn, simply return the first element
     }
 
-    string create_response(const Message& original_msg, int result) {
+    pair<string,int> create_response(const Message& original_msg, int result) {
+        // Response Format: <MessageType>:<server_id>:<client_id>:<sub_task_id>:result
         stringstream ss;
-        ss << my_id << ":" << original_msg.client_id << ":" << original_msg.task_id << ":" << result;
-        return ss.str();
+        ss << "0:"<< my_id << ":" << original_msg.client_id << ":" << original_msg.subtask_id << ":" << result;
+        if(clients_available.empty()){
+            clients_available = fetch_clients();
+        }
+        for(auto client: clients_available){
+            if(client[0] == original_msg.client_id){
+                return {ss.str(),stoi(client[1])};
+            }
+        }
     }
 
     // GPT-genereated
     void log_result(const SubtaskResult& result) {
         // To console
-        EV << "Server " << my_server_number << " computed max: " << result.max_element << " for task: " << result.task_id << endl;
+        EV << "Server " << my_server_number << " computed max: " << result.result << " for task: " << result.subtask_id << endl;
 
         // To file
         string filename = "output.txt";
+        ofstream outfile(filename);
         if (outfile.is_open()) {
-            outfile << "Task: " << result.task_id << ", Max: " << result.max_element << ", Time: " << result.timestamp.str() << endl;
+            outfile << "Task: " << result.subtask_id << ", Max: " << result.result << ", Time: " << result.timestamp.str() << endl;
             outfile.close();
         }
     }
 
+    // Doubtful of this code!!
     void decide_malicious() {
         int total_servers = gateSize("outClientGates");
         // Ensure that max of n/4 are malicious
@@ -123,7 +120,7 @@ void Server::initialize() {
 }
 
 void Server::handleMessage(cMessage *msg) {
-    string msg_content = msg->str();
+    string msg_content = msg->getName();
     EV << "Server " << my_server_number << " received message: " << msg_content << endl;
 
     Message parsed_msg = parse_message(msg_content);
@@ -132,22 +129,24 @@ void Server::handleMessage(cMessage *msg) {
     int result;
     result = is_malicious ? get_malicious_result(parsed_msg.data) : find_max(parsed_msg.data);
 
-    SubtaskResult subtask_result = {    // process subtask and get result
-        parsed_msg.task_id,
-        parsed_msg.data,
-        result,
-        simTime()
-    };
+    SubtaskResult subtask_result;
+
+    subtask_result.subtask_id = parsed_msg.subtask_id;
+    subtask_result.result = result;
+    subtask_result.timestamp = simTime();
+
     subtask_history.push_back(subtask_result);
     log_result(subtask_result);  // log
 
     // response to client
-    string response = create_response(parsed_msg, result);
-    cMessage *response_msg = new cMessage(response.c_str());
+    pair<string,int> response = create_response(parsed_msg, result);
+    cMessage *response_msg = new cMessage(response.first.c_str());
+
 
     // GPT recommended, but can remove this random processing delay between 0.1 and 0.5 seconds
+    // issue, where should the message go?? I mean which gate?
     simtime_t processing_delay = uniform(0.1, 0.5);
-    scheduleAt(simTime() + processing_delay, response_msg);
+    send(response_msg,"outClientGates",response.second);
 
     delete msg;
 }

@@ -2063,3 +2063,174 @@ org.eclipse.core.runtime.CoreException:
 	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1054)
 	at org.omnetpp.launch.SimulationLaunchShortcut$1.run(SimulationLaunchShortcut.java:315)
 	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:124)
+!SESSION 2025-03-26 23:12:07.736 -----------------------------------------------
+eclipse.buildId=6.1.0.241008-f7568267cd
+java.version=21.0.4
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.omnetpp.main 1 0 2025-03-26 23:12:16.008
+!MESSAGE OMNeT++ IDE 6.1.0.241008-f7568267cd started.
+
+!ENTRY org.python.pydev.shared_core 1 1 2025-03-26 23:12:17.529
+!MESSAGE Unable to track file that does not exist: /home/veer/Downloads/omnetpp-6.1/ide/plugins/org.omnetpp.scave.pychart_6.1.0.241008-f7568267cd/python
+!STACK 0
+java.lang.RuntimeException: Unable to track file that does not exist: /home/veer/Downloads/omnetpp-6.1/ide/plugins/org.omnetpp.scave.pychart_6.1.0.241008-f7568267cd/python
+	at org.python.pydev.shared_core.log.Log.logInfo(Log.java:54)
+	at org.python.pydev.shared_core.path_watch.PathWatch.track(PathWatch.java:325)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.afterSetInfos(SyncSystemModulesManagerScheduler.java:459)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.afterSetInfos(SyncSystemModulesManagerScheduler.java:440)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.registerInterpreterManager(SyncSystemModulesManagerScheduler.java:66)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.start(SyncSystemModulesManagerScheduler.java:88)
+	at org.python.pydev.plugin.PydevPlugin$1.run(PydevPlugin.java:160)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.python.pydev.shared_core 1 1 2025-03-26 23:12:17.530
+!MESSAGE Unable to track file that does not exist: /home/veer/Downloads/omnetpp-6.1/python
+!STACK 0
+java.lang.RuntimeException: Unable to track file that does not exist: /home/veer/Downloads/omnetpp-6.1/python
+	at org.python.pydev.shared_core.log.Log.logInfo(Log.java:54)
+	at org.python.pydev.shared_core.path_watch.PathWatch.track(PathWatch.java:325)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.afterSetInfos(SyncSystemModulesManagerScheduler.java:459)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.afterSetInfos(SyncSystemModulesManagerScheduler.java:440)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.registerInterpreterManager(SyncSystemModulesManagerScheduler.java:66)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.start(SyncSystemModulesManagerScheduler.java:88)
+	at org.python.pydev.plugin.PydevPlugin$1.run(PydevPlugin.java:160)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.python.pydev.shared_core 1 1 2025-03-26 23:12:17.531
+!MESSAGE Unable to track file that does not exist: /usr/lib/python3.10
+!STACK 0
+java.lang.RuntimeException: Unable to track file that does not exist: /usr/lib/python3.10
+	at org.python.pydev.shared_core.log.Log.logInfo(Log.java:54)
+	at org.python.pydev.shared_core.path_watch.PathWatch.track(PathWatch.java:325)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.afterSetInfos(SyncSystemModulesManagerScheduler.java:459)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.afterSetInfos(SyncSystemModulesManagerScheduler.java:440)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.registerInterpreterManager(SyncSystemModulesManagerScheduler.java:66)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.start(SyncSystemModulesManagerScheduler.java:88)
+	at org.python.pydev.plugin.PydevPlugin$1.run(PydevPlugin.java:160)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.python.pydev.shared_core 1 1 2025-03-26 23:12:17.531
+!MESSAGE Unable to track file that does not exist: /usr/lib/python3.10/lib-dynload
+!STACK 0
+java.lang.RuntimeException: Unable to track file that does not exist: /usr/lib/python3.10/lib-dynload
+	at org.python.pydev.shared_core.log.Log.logInfo(Log.java:54)
+	at org.python.pydev.shared_core.path_watch.PathWatch.track(PathWatch.java:325)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.afterSetInfos(SyncSystemModulesManagerScheduler.java:459)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.afterSetInfos(SyncSystemModulesManagerScheduler.java:440)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.registerInterpreterManager(SyncSystemModulesManagerScheduler.java:66)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.start(SyncSystemModulesManagerScheduler.java:88)
+	at org.python.pydev.plugin.PydevPlugin$1.run(PydevPlugin.java:160)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.python.pydev.shared_core 1 1 2025-03-26 23:12:17.532
+!MESSAGE Unable to track file that does not exist: /home/veer/.local/lib/python3.10/site-packages
+!STACK 0
+java.lang.RuntimeException: Unable to track file that does not exist: /home/veer/.local/lib/python3.10/site-packages
+	at org.python.pydev.shared_core.log.Log.logInfo(Log.java:54)
+	at org.python.pydev.shared_core.path_watch.PathWatch.track(PathWatch.java:325)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.afterSetInfos(SyncSystemModulesManagerScheduler.java:459)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.afterSetInfos(SyncSystemModulesManagerScheduler.java:440)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.registerInterpreterManager(SyncSystemModulesManagerScheduler.java:66)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.start(SyncSystemModulesManagerScheduler.java:88)
+	at org.python.pydev.plugin.PydevPlugin$1.run(PydevPlugin.java:160)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.python.pydev.shared_core 1 1 2025-03-26 23:12:17.533
+!MESSAGE Unable to track file that does not exist: /usr/local/lib/python3.10/dist-packages
+!STACK 0
+java.lang.RuntimeException: Unable to track file that does not exist: /usr/local/lib/python3.10/dist-packages
+	at org.python.pydev.shared_core.log.Log.logInfo(Log.java:54)
+	at org.python.pydev.shared_core.path_watch.PathWatch.track(PathWatch.java:325)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.afterSetInfos(SyncSystemModulesManagerScheduler.java:459)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.afterSetInfos(SyncSystemModulesManagerScheduler.java:440)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.registerInterpreterManager(SyncSystemModulesManagerScheduler.java:66)
+	at org.python.pydev.ast.codecompletion.revisited.SyncSystemModulesManagerScheduler.start(SyncSystemModulesManagerScheduler.java:88)
+	at org.python.pydev.plugin.PydevPlugin$1.run(PydevPlugin.java:160)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.ui.console 4 0 2025-03-27 10:06:40.924
+!MESSAGE Streams are already closed.
+!STACK 0
+java.lang.IllegalStateException: Streams are already closed.
+	at org.eclipse.ui.internal.console.IOConsolePartitioner.streamsClosed(IOConsolePartitioner.java:278)
+	at org.eclipse.ui.console.IOConsole.checkFinished(IOConsole.java:263)
+	at org.eclipse.ui.console.IOConsole.streamClosed(IOConsole.java:275)
+	at org.eclipse.ui.console.IOConsoleOutputStream.close(IOConsoleOutputStream.java:182)
+	at org.omnetpp.launch.tabs.OmnetppLaunchUtils.doPrintToConsole(OmnetppLaunchUtils.java:1007)
+	at org.omnetpp.launch.tabs.OmnetppLaunchUtils.printToConsole(OmnetppLaunchUtils.java:1022)
+	at org.omnetpp.launch.SimulationLauncherJob.dumpPostMortemInfo(SimulationLauncherJob.java:218)
+	at org.omnetpp.launch.SimulationLauncherJob.run(SimulationLauncherJob.java:145)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.omnetpp.launch 4 134 2025-03-27 10:06:40.936
+!MESSAGE Finished with Error
+!STACK 0
+java.lang.RuntimeException: 
+	at org.omnetpp.launch.SimulationLauncherJob.run(SimulationLauncherJob.java:158)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.ui.console 4 0 2025-03-27 10:08:05.114
+!MESSAGE Streams are already closed.
+!STACK 0
+java.lang.IllegalStateException: Streams are already closed.
+	at org.eclipse.ui.internal.console.IOConsolePartitioner.streamsClosed(IOConsolePartitioner.java:278)
+	at org.eclipse.ui.console.IOConsole.checkFinished(IOConsole.java:263)
+	at org.eclipse.ui.console.IOConsole.streamClosed(IOConsole.java:275)
+	at org.eclipse.ui.console.IOConsoleOutputStream.close(IOConsoleOutputStream.java:182)
+	at org.omnetpp.launch.tabs.OmnetppLaunchUtils.doPrintToConsole(OmnetppLaunchUtils.java:1007)
+	at org.omnetpp.launch.tabs.OmnetppLaunchUtils.printToConsole(OmnetppLaunchUtils.java:1022)
+	at org.omnetpp.launch.SimulationLauncherJob.dumpPostMortemInfo(SimulationLauncherJob.java:218)
+	at org.omnetpp.launch.SimulationLauncherJob.run(SimulationLauncherJob.java:145)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.omnetpp.launch 4 136 2025-03-27 10:08:05.115
+!MESSAGE Finished with Error
+!STACK 0
+java.lang.RuntimeException: 
+	at org.omnetpp.launch.SimulationLauncherJob.run(SimulationLauncherJob.java:158)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.ui.console 4 0 2025-03-27 10:11:50.815
+!MESSAGE Streams are already closed.
+!STACK 0
+java.lang.IllegalStateException: Streams are already closed.
+	at org.eclipse.ui.internal.console.IOConsolePartitioner.streamsClosed(IOConsolePartitioner.java:278)
+	at org.eclipse.ui.console.IOConsole.checkFinished(IOConsole.java:263)
+	at org.eclipse.ui.console.IOConsole.streamClosed(IOConsole.java:275)
+	at org.eclipse.ui.console.IOConsoleOutputStream.close(IOConsoleOutputStream.java:182)
+	at org.omnetpp.launch.tabs.OmnetppLaunchUtils.doPrintToConsole(OmnetppLaunchUtils.java:1007)
+	at org.omnetpp.launch.tabs.OmnetppLaunchUtils.printToConsole(OmnetppLaunchUtils.java:1022)
+	at org.omnetpp.launch.SimulationLauncherJob.dumpPostMortemInfo(SimulationLauncherJob.java:218)
+	at org.omnetpp.launch.SimulationLauncherJob.run(SimulationLauncherJob.java:145)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.omnetpp.launch 4 137 2025-03-27 10:11:50.816
+!MESSAGE Finished with Error
+!STACK 0
+java.lang.RuntimeException: 
+	at org.omnetpp.launch.SimulationLauncherJob.run(SimulationLauncherJob.java:158)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.ui.console 4 0 2025-03-27 10:17:21.523
+!MESSAGE Streams are already closed.
+!STACK 0
+java.lang.IllegalStateException: Streams are already closed.
+	at org.eclipse.ui.internal.console.IOConsolePartitioner.streamsClosed(IOConsolePartitioner.java:278)
+	at org.eclipse.ui.console.IOConsole.checkFinished(IOConsole.java:263)
+	at org.eclipse.ui.console.IOConsole.streamClosed(IOConsole.java:275)
+	at org.eclipse.ui.console.IOConsoleOutputStream.close(IOConsoleOutputStream.java:182)
+	at org.omnetpp.launch.tabs.OmnetppLaunchUtils.doPrintToConsole(OmnetppLaunchUtils.java:1007)
+	at org.omnetpp.launch.tabs.OmnetppLaunchUtils.printToConsole(OmnetppLaunchUtils.java:1022)
+	at org.omnetpp.launch.SimulationLauncherJob.dumpPostMortemInfo(SimulationLauncherJob.java:218)
+	at org.omnetpp.launch.SimulationLauncherJob.run(SimulationLauncherJob.java:145)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.omnetpp.launch 4 137 2025-03-27 10:17:21.524
+!MESSAGE Finished with Error
+!STACK 0
+java.lang.RuntimeException: 
+	at org.omnetpp.launch.SimulationLauncherJob.run(SimulationLauncherJob.java:158)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)

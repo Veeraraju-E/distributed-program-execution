@@ -17,8 +17,8 @@ simple Server
 network Network_Setup
 {
     submodules:
-        client[4]: Client;
         server[4]: Server;
+        client[4]: Client;
 
     connections allowunconnected:
         for i = 0..3 {
