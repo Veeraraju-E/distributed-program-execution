@@ -2,6 +2,7 @@
 #include <omnetpp.h>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 #include "helper.h"
 #include <unordered_set>
 #include <map>
@@ -14,18 +15,9 @@ using namespace omnetpp;
 
 
 // Client Tasks
-
-/* Parser message
- * TODO: Task 03
- * Then, broadcast to all clients my score (Format must be gossip format) <self.timestamp>:<self.ID>:<self.Score#>
- * Ensure that we proceed for the second task only after broadcasting my score
- */
-
-/*
- * TODO: Task 04
- * Selection of servers based on scores (Need to decide the algorithm)
- */
-
+// TODO: handle logging more elegantly
+// TODO: Optimize the code.
+// TODO: Dynamic network setup
 
 
 class Client : public cSimpleModule
@@ -37,25 +29,25 @@ class Client : public cSimpleModule
 
   private:
 
+    // Needed to efficiently handle subtasks
     struct Subtask {
         string subtask_id;
         vector<int> input;
-        int right_answer;
     };
 
-
+    // needed to efficiently handle task
     struct Task{
         string task_id;
         map<string,Subtask> subtasks;
-        unordered_set<int> servers_targeted;
-        map<string,vector<SubtaskResult>> subtask_results;
+        unordered_set<int> servers_targeted;               // -> the servers to whom we'll send the subtasks
+        map<string,vector<SubtaskResult>> subtask_results; // -> results of subtasks are a dictionary
         int final_result = 0;
         int subtasks_done = 0;
     };
 
-    vector<vector<string>> servers_connected = {};
-    map<string,float> server_scores;
-    vector<vector<string>> clients_connected = {};
+    vector<vector<string>> servers_connected = {};         // list of servers
+    map<string,float> server_scores;                       // server scores
+    vector<vector<string>> clients_connected = {};         // list of connected clients
     string my_id = "";
     int tasks_done = 0;
     int my_client_number = 0;
@@ -63,7 +55,7 @@ class Client : public cSimpleModule
     vector<Task> task_history = {};
     vector<Message> message_history = {};
 
-
+    // method to save clients that the current client is connected to
     void save_my_clients(vector<vector<string>> clients_available){
         if(clients_available.empty()){
             return;
@@ -78,56 +70,73 @@ class Client : public cSimpleModule
 
     }
 
-
+    // a typecast method to type cast subtask to a message that can be transferred
     string to_message(Subtask subtask){
         // Message Format needed: <Message_Type>:<client_id>:<sub_task_id>:<elements of array>(csv)
         string msg = "1:"+my_id+":"+subtask.subtask_id+":"+to_string(subtask.input[0])+","+to_string(subtask.input[1]);
         return msg;
     }
 
+    // used to parse a message received by client
     Message parse_message(const string& msg){
 
         Message received_message;
         stringstream ss(msg);
         string token;
+        // token = Message_Type : 0 -> Subtask response, 1-> subtask request, 2-> server score broadcast
         getline(ss,token,':');
         if(token == "0"){
+
             // Response Format: <Message_Type>:<server_id>:<client_id>:<sub_task_id>:<result> for subtask result
 
             received_message.type = SUBTASK_RESPONSE;
             SubtaskResult result;
+            // token = server id
             getline(ss,token,':');
-
             result.server_id = token;
+
+            // token = client id now.
             getline(ss,token,':');
-            cout << msg << " " << token << " " << my_id << endl;
             if(token != my_id){
+                // if client id doesn't match => this isn't my message, so we need to discard this message
                 received_message.isError = true;
                 received_message.subtaskresult = result;
                 return received_message;
             }
+            // token = subtask id
             getline(ss,token,':');
             result.subtask_id = token;
+
+            // token = subtask result by the current server
             getline(ss,token,':');
             result.result = stoi(token);
             received_message.subtaskresult = result;
+
+            // for logging purpose
             cout << received_message.subtaskresult.result << " " << received_message.subtask_id << " " <<  received_message.subtaskresult.server_id << endl;
         }
         else if(token == "2"){
             // Response format: <Message_Type>:<timestamp>:<client_id>:<server_scores>:<msg_hash>
-
-            // verification with hash pending
             received_message.type = SERVER_SCORES_UPDATE;
+
+            // token = timestamp -> need to handle its usage
             getline(ss,token,':');
+
+            // token = client id of the sender client
             getline(ss,token,':');
             received_message.client_id = token;
+
+            // token = server scores which are of the form <serverid>_<serverscore>
             getline(ss,token,':');
 
-            string server_score_pair;
+            string server_score_pair; // -> to store the server_score_pair
+
             stringstream server_scores_received(token);
+
             while(getline(server_scores_received,server_score_pair,',')){
+
+                // updating server scores in the message struct as of now!!
                 string server_id = server_score_pair.substr(0,server_score_pair.find('_'));
-                cout << server_score_pair << endl;
                 int server_score = stoi(server_score_pair.substr(server_score_pair.find('_')+1,server_score_pair.size()));
                 received_message.sever_scores[server_id] = server_score;
             }
@@ -171,7 +180,7 @@ class Client : public cSimpleModule
         }
 
         if(is_first_task){
-        // choosing the target servers
+        // choosing the target servers randomly
             unordered_set<int> chosen_servers;
             while(chosen_servers.size() != n/2 + 1){
                 int server_index = rand() % n;
@@ -180,33 +189,67 @@ class Client : public cSimpleModule
 
             task.servers_targeted = chosen_servers;
 
+      } else {
+
+          unordered_set<int> chosen_servers;
+          // converting to vector to sort
+          vector<pair<string,float>> current_server_scores(server_scores.begin(),server_scores.end());
+          sort(current_server_scores.begin(),current_server_scores.end(),[](const auto& a, const auto& b) {
+              return a.second < b.second;  // Sort by value (lexicographically)
+          });
+
+          // choosing top n//2 + 1 servers for this subtask
+          for(int i = 0; i < n/2 + 1;i++){
+              // fetching server gate to send the message
+              int gate = get_server_gate(current_server_scores[i].first);
+              chosen_servers.insert(gate);
+          }
+          // target servers attached to the task
+          task.servers_targeted = chosen_servers;
+
       }
 
      return task;
     }
 
-   void distribute_task_to_servers(){
+   int get_server_gate(const string& server_id){
+       // overhead function to fetch server gate based on id
+       for(auto server: servers_connected){
+           if(server[0] == server_id){
+               return stoi(server[1]);
+           }
+       }
+    }
 
+   void distribute_task_to_servers(){
+       // important function to distribute tasks among chosen servers
        for(auto subtask: current_task.subtasks){
            for(auto server: current_task.servers_targeted){
-               string msg = to_message(subtask.second);
+               // for logging purpose
                EV << "Client " << my_client_number << " " << msg << " to server" << server <<  endl;
+
+               // send the message
+               string msg = to_message(subtask.second);
                cMessage* msg_to_send = new cMessage(msg.c_str());
                send(msg_to_send,"outServerGates",server);
-
-//               delete msg_to_send;
+               delete msg_to_send;
            }
        }
    }
 
    void update_task_result(const string& subtask_id){
+       // to update server task result
        if(current_task.subtasks.find(subtask_id) == current_task.subtasks.end()){
            EV << "Received wrong subtask result " << subtask_id <<  " for the current task" << endl;
            return;
        }
 
+       // subtask fetched
        Subtask subtask = current_task.subtasks[subtask_id];
+       // subtask results from all server fetched
        vector<SubtaskResult> results = current_task.subtask_results[subtask_id];
+
+       // computing the frequencies of each result
        map<int,int> freq_results;
        for(auto result: results){
            if(freq_results.find(result.result) == freq_results.end()){
@@ -216,6 +259,7 @@ class Client : public cSimpleModule
            }
        }
 
+       // storing the correct result based on majority
        pair<int,int> correct_result = {0,-1};
        for(auto result: freq_results){
            if(result.second > correct_result.second){
@@ -223,10 +267,12 @@ class Client : public cSimpleModule
            }
        }
 
+       // updating the task's final result also based on this
        if(current_task.final_result < correct_result.first){
            current_task.final_result = correct_result.first;
        }
 
+       // updating whether the server's response was wrong (malicious) or not
        for(auto subtaskresult: results){
            if(subtaskresult.result != correct_result.first){
                subtaskresult.isWrongResult = true;
@@ -235,6 +281,7 @@ class Client : public cSimpleModule
    }
 
    void consolidate_server_scores(){
+       // a method that calculates server scores and updates them
        for(auto subtask: current_task.subtask_results){
            for(auto subtaskresult: subtask.second){
                string server_id = subtaskresult.server_id;
@@ -250,6 +297,7 @@ class Client : public cSimpleModule
    pair<Message,string> get_server_scores(){
        // Broadcast format: <Message_Type>:<timestamp>:<client_id>:<server_scores>:<msg_hash>
        // server_scores -> <server_id>_<server_score>[,<server_id>_<server_score>]
+
        Message message;
        message.type = SERVER_SCORES_UPDATE;
        message.client_id = my_id;
@@ -278,9 +326,9 @@ class Client : public cSimpleModule
 
 
    void broadcast_scores(){
+
+       // need to have log here
        pair<Message,string> msg_to_broadcast = get_server_scores();
-
-
        send(new cMessage(msg_to_broadcast.second.c_str()),"outClientGates",0);
        send(new cMessage(msg_to_broadcast.second.c_str()),"outClientGates",1);
 
@@ -288,6 +336,7 @@ class Client : public cSimpleModule
    }
 
    bool is_message_in_history(Message msg){
+       // again an overhead function to check if the message received was in history or not
        for(auto msg_in_history: message_history){
            if(msg.msg_hash == msg_in_history.msg_hash){
                return true;
@@ -297,7 +346,7 @@ class Client : public cSimpleModule
    }
 
    void forward_server_scores(Message msg,string msg_to_forward){
-
+       // currently a separate function, will be merged soon with broadcast_scores
        if(!is_message_in_history(msg)){
           send(new cMessage(msg_to_forward.c_str()),"outClientGates",0);
           send(new cMessage(msg_to_forward.c_str()),"outClientGates",1);
@@ -309,6 +358,7 @@ class Client : public cSimpleModule
 
 
    void update_server_scores(Message msg){
+       // helper function to update the received server scores from other clients
        for(auto server: msg.sever_scores){
            if(server_scores.find(server.first) == server_scores.end()){
                server_scores[server.first] = server.second;
@@ -320,6 +370,7 @@ class Client : public cSimpleModule
 
 
    void start_task(){
+       // initial task function -> no relevance as of now
        send(new cMessage("Hello"),"outClientGates",0);
    }
 
@@ -333,24 +384,26 @@ void Client::initialize() {
     while(servers_connected.size() == 0){
         servers_connected = fetch_servers();
     }
-    cout << servers_connected.size() << endl;
+
+    // fetching all clients that are available
     vector<vector<string>> clients_available = fetch_clients();
+    // getting client id by registering in the network
     string temp = create_client(clients_available.size());
     if(temp != "None"){
         my_id = temp;
     }
+    // the client number is for finding client gates efficiently
     my_client_number = clients_available.size();
+    // logging purpose
     EV << my_id << " " << my_client_number << endl;
+    // saving connected clients for further use
     save_my_clients(clients_available);
-    Task first_task = create_task(true);
 
+    // create the first task
+    Task first_task = create_task(true);
     current_task = first_task;
     distribute_task_to_servers();
-//    start_task();
 }
-
-
-
 
 void Client::handleMessage(cMessage *cmsg)
 {
@@ -365,6 +418,7 @@ void Client::handleMessage(cMessage *cmsg)
 
         EV << "Hello from client " << my_client_number << endl;
 
+        // if this is the first server to send subtask result
         if(current_task.subtask_results.find(msg.subtaskresult.subtask_id) == current_task.subtask_results.end()){
             current_task.subtask_results[msg.subtaskresult.subtask_id] = {msg.subtaskresult};
 
@@ -373,26 +427,33 @@ void Client::handleMessage(cMessage *cmsg)
             current_task.subtask_results[msg.subtaskresult.subtask_id].push_back(msg.subtaskresult);
         }
 
-        EV << "Client " << my_client_number << " received message " << cmsg->getName() << " " <<  current_task.subtask_results.size() << " " << current_task.subtask_results[msg.subtaskresult.subtask_id].size() << endl;
+//        EV << "Client " << my_client_number << " received message " << cmsg->getName() << " " <<  current_task.subtask_results.size() << " " << current_task.subtask_results[msg.subtaskresult.subtask_id].size() << endl;
 
-        // Implies all sent subtask instances are received
+        // Implies all subtask responses are received
         if(current_task.subtask_results[msg.subtaskresult.subtask_id].size() == current_task.servers_targeted.size()){
             cout << "Hello in subtask completion" << endl;
 //            EV << "Client " << my_client_number << "received message " << cmsg->getName() << endl;
+
+            // update the task result based on the completed subtask
             update_task_result(msg.subtaskresult.subtask_id);
             current_task.subtasks_done+=1;
+
+            // logging purpose
             EV << "Client " << my_client_number << " " << current_task.final_result << endl;
         }
 
-        if(current_task.subtasks_done == current_task.subtasks.size() && tasks_done != 2){
+        // if all subtasks of current task are done
+        if(current_task.subtasks_done == current_task.subtasks.size()){
             consolidate_server_scores();
             EV << "Myself Client " << my_client_number << ". I have received all subtask results " << current_task.final_result << endl;
             broadcast_scores();
             tasks_done+=1;
-            Task task = create_task(false);
-            task_history.push_back(current_task);
-            current_task = task;
-            distribute_task_to_servers();
+            if(tasks_done != 2){
+                Task task = create_task(false);
+                task_history.push_back(current_task);
+                current_task = task;
+                distribute_task_to_servers();
+            }
         }
     }
 
