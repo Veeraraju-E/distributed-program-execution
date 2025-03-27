@@ -21,13 +21,7 @@ private:
     string my_id = "";
     vector<vector<string>> clients_available = {};
 
-//    // store history of subtask results
-//    struct SubtaskResult {
-//        string subtask_id;
-//        vector<int> input;
-//        int max_element;
-//        simtime_t timestamp;
-//    };
+
     vector<SubtaskResult> subtask_history;
 
     // get info from message; GPT-genereated
