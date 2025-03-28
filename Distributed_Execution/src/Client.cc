@@ -221,21 +221,21 @@ class Client : public cSimpleModule
        }
     }
 
-   void distribute_task_to_servers(){
-       // important function to distribute tasks among chosen servers
-       for(auto subtask: current_task.subtasks){
-           for(auto server: current_task.servers_targeted){
-               // for logging purpose
-               EV << "Client " << my_client_number << " " << msg << " to server" << server <<  endl;
+    void distribute_task_to_servers(){
+        // important function to distribute tasks among chosen servers
+        for(auto subtask: current_task.subtasks){
+            for(auto server: current_task.servers_targeted){
+                // send the message
+                string msg = to_message(subtask.second);
+                // for logging purpose
+                EV << "Client " << my_client_number << " " << msg << " to server" << server <<  endl;
 
-               // send the message
-               string msg = to_message(subtask.second);
-               cMessage* msg_to_send = new cMessage(msg.c_str());
-               send(msg_to_send,"outServerGates",server);
-               delete msg_to_send;
-           }
-       }
-   }
+                cMessage* msg_to_send = new cMessage(msg.c_str());
+                send(msg_to_send,"outServerGates",server);
+                delete msg_to_send;
+            }
+        }
+    }
 
    void update_task_result(const string& subtask_id){
        // to update server task result
