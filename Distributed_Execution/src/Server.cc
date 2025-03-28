@@ -17,10 +17,15 @@ protected:
 
 private:
     int my_server_number = 0;
-    bool is_malicious = false;
     string my_id = "";
     vector<vector<string>> clients_available = {};
-
+    
+    // Track malicious decisions per task
+    map<string, bool> task_malicious_decisions;
+    
+    // Track total servers for n/4 calculation
+    int total_servers = 0;
+    int current_malicious_count = 0;
 
     vector<SubtaskResult> subtask_history;
 
@@ -34,7 +39,7 @@ private:
         getline(ss, token, ':');    // at first ':', we stop and retrieve client_id
         msg.client_id = token;
 
-        getline(ss, token, ':');    // from first to second ':', we retrieve task_id
+        getline(ss, token, ':');    // from first to second ':', we retrieve subtask_id
         msg.subtask_id = token;
 
         // fetch the vector data, starts after third ':'
@@ -55,10 +60,54 @@ private:
         return *max_element(arr.begin(), arr.end());    // value
     }
 
-    // Return wrong results: TODO: How? Random/Explicitly wrong
-    int get_malicious_result(const vector<int>& arr) {
-        if (arr.empty()) return -1;
-        return arr[0]; // rn, simply return the first element
+    // malicious behavior
+    int process_task(const vector<int>& arr, const string& subtask_id) {
+        // Check if decision already made for this task
+        if (task_malicious_decisions.find(subtask_id) != task_malicious_decisions.end()) {
+            if (!task_malicious_decisions[subtask_id]) {
+                return find_max(arr);
+            }
+        } else {
+            int max_malicious = total_servers / 4;
+            
+            if (current_malicious_count >= max_malicious) { // has to be honest
+                task_malicious_decisions[subtask_id] = false;
+                return find_max(arr);
+            }
+
+            double probability = (max_malicious - current_malicious_count) / static_cast<double>(max_malicious);
+            random_device rd;
+            mt19937 gen(rd());
+            uniform_real_distribution<> dis(0.0, 1.0);
+            
+            bool will_be_malicious = dis(gen) < probability;
+            task_malicious_decisions[subtask_id] = will_be_malicious;
+            
+            if (!will_be_malicious) {
+                return find_max(arr);
+            }
+            current_malicious_count++;
+        }
+
+        // generate the malicious result
+        int actual_max = find_max(arr);
+        vector<int> possible_wrong_results;
+        
+        for (int val : arr) {
+            if (val != actual_max) {
+                possible_wrong_results.push_back(val);
+            }
+        }
+        
+        if (possible_wrong_results.empty()) {   // in cases of single element array as input, we won't have any other elements
+            return actual_max - 1;
+        }
+        
+        // in all other cases, return random number not equal to max
+        random_device rd;
+        mt19937 gen(rd());
+        uniform_int_distribution<> dis(0, possible_wrong_results.size() - 1);
+        return possible_wrong_results[dis(gen)];
     }
 
     pair<string,int> create_response(const Message& original_msg, int result) {
@@ -88,15 +137,6 @@ private:
             outfile.close();
         }
     }
-
-    // Doubtful of this code!!
-    void decide_malicious() {
-        int total_servers = gateSize("outClientGates");
-        // Ensure that max of n/4 are malicious
-        if (dblrand() < (0.25 * total_servers)) {
-            is_malicious = true;
-        }
-    }
 };
 
 Define_Module(Server);
@@ -108,9 +148,9 @@ void Server::initialize() {
         my_id = temp;
     }
     my_server_number = servers.size();
-    decide_malicious();
-
-    EV << "Server " << my_server_number << " with ID: " << my_id << " has malicious behavior: " << (is_malicious ? "Yes" : "No") << endl;
+    total_servers = servers.size();
+    
+    EV << "Server " << my_server_number << " with ID: " << my_id << " initialized" << endl;
 }
 
 void Server::handleMessage(cMessage *msg) {
@@ -118,28 +158,18 @@ void Server::handleMessage(cMessage *msg) {
     EV << "Server " << my_server_number << " received message: " << msg_content << endl;
 
     Message parsed_msg = parse_message(msg_content);
-
-    // Process subtask
-    int result;
-    result = is_malicious ? get_malicious_result(parsed_msg.data) : find_max(parsed_msg.data);
+    int result = process_task(parsed_msg.data, parsed_msg.subtask_id);
 
     SubtaskResult subtask_result;
-
     subtask_result.subtask_id = parsed_msg.subtask_id;
     subtask_result.result = result;
     subtask_result.timestamp = simTime();
 
     subtask_history.push_back(subtask_result);
-    log_result(subtask_result);  // log
+    log_result(subtask_result);
 
-    // response to client
     pair<string,int> response = create_response(parsed_msg, result);
     cMessage *response_msg = new cMessage(response.first.c_str());
-
-
-    // GPT recommended, but can remove this random processing delay between 0.1 and 0.5 seconds
-    // issue, where should the message go?? I mean which gate?
-    simtime_t processing_delay = uniform(0.1, 0.5);
     send(response_msg,"outClientGates",response.second);
 
     delete msg;
