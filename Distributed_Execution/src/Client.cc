@@ -7,6 +7,7 @@
 #include <unordered_set>
 #include <map>
 #include <chrono>
+#include <fstream>
 
 #define MAX_ELEMENT_OF_ARRAY 10000000007
 
@@ -19,6 +20,17 @@ using namespace omnetpp;
 // TODO: Optimize the code.
 // TODO: Dynamic network setup
 
+/* things to be logged:
+ * 1. Client Creation
+ * 2. The first task array
+ * 3. The first task servers chosen
+ * 4. The first task subtasks distributed, one log per subtask
+ * 5. The subtask completion, log the majority result
+ * 6. The task completion, its final answer and scores of servers
+ * 7. Broadcast log, one final log after all broadcast sent
+ * 8. If broadcast received, then log the message
+ * 9. Repeat 2-8 for task 2
+*/
 
 class Client : public cSimpleModule
 {
@@ -157,7 +169,8 @@ class Client : public cSimpleModule
             task_array.push_back(num);
         }
 
-        EV << "Client " << my_client_number << ' ' << task_digest << endl;
+        log_info("Array generated for task "+to_string(tasks_done+1)+" "+task_digest);
+        EV << "Client " << my_client_number << " Array generated for task "+to_string(tasks_done+1)+" "+task_digest;
 
         // creating the task
         string task_id = generate_hash(task_digest);
@@ -186,6 +199,11 @@ class Client : public cSimpleModule
                 int server_index = rand() % n;
                 chosen_servers.insert(server_index);
             }
+            string servers_chosen = "";
+            for(auto server: chosen_servers){
+                servers_chosen+="Server "+to_string(server)+",";
+            }
+            log_info("Servers chosen for task "+to_string(tasks_done+1)+" " + servers_chosen);
 
             task.servers_targeted = chosen_servers;
 
@@ -204,6 +222,11 @@ class Client : public cSimpleModule
               int gate = get_server_gate(current_server_scores[i].first);
               chosen_servers.insert(gate);
           }
+          string servers_chosen = "";
+          for(auto server: chosen_servers){
+              servers_chosen+="Server "+to_string(server)+",";
+          }
+          log_info("Servers chosen for task "+to_string(tasks_done+1)+" " + servers_chosen);
           // target servers attached to the task
           task.servers_targeted = chosen_servers;
 
@@ -225,15 +248,13 @@ class Client : public cSimpleModule
        // important function to distribute tasks among chosen servers
        for(auto subtask: current_task.subtasks){
            for(auto server: current_task.servers_targeted){
-               // for logging purpose
-               EV << "Client " << my_client_number << " " << msg << " to server" << server <<  endl;
-
                // send the message
                string msg = to_message(subtask.second);
                cMessage* msg_to_send = new cMessage(msg.c_str());
                send(msg_to_send,"outServerGates",server);
-               delete msg_to_send;
+//               delete msg_to_send;
            }
+           log_info("Subtask "+subtask.second.subtask_id+" of "+to_string(tasks_done+1)+" distributed to servers");
        }
    }
 
@@ -267,10 +288,14 @@ class Client : public cSimpleModule
            }
        }
 
+       log_info("Subtask "+subtask.subtask_id+" result is: "+to_string(correct_result.first)+" with vote of "+to_string(correct_result.second));
+
        // updating the task's final result also based on this
        if(current_task.final_result < correct_result.first){
            current_task.final_result = correct_result.first;
        }
+
+       log_info("Task" + to_string(tasks_done+1) + " result updated to "+to_string(current_task.final_result));
 
        // updating whether the server's response was wrong (malicious) or not
        for(auto subtaskresult: results){
@@ -291,6 +316,12 @@ class Client : public cSimpleModule
                    server_scores[server_id]+= (subtaskresult.isWrongResult == false);
                }
            }
+          string str_server_scores = "";
+          for(auto server: server_scores){
+              str_server_scores+=server.first+" "+to_string(server.second)+"\n";
+          }
+          EV << "Server Scores after task " << to_string(tasks_done+1) << " " << str_server_scores << endl;
+          log_info("Server Scores after task " + to_string(tasks_done+1) + " " + str_server_scores);
        }
    }
 
@@ -331,7 +362,7 @@ class Client : public cSimpleModule
        pair<Message,string> msg_to_broadcast = get_server_scores();
        send(new cMessage(msg_to_broadcast.second.c_str()),"outClientGates",0);
        send(new cMessage(msg_to_broadcast.second.c_str()),"outClientGates",1);
-
+       log_info("Scores broadcasted for task "+to_string(tasks_done+1));
        message_history.push_back(msg_to_broadcast.first);
    }
 
@@ -368,6 +399,18 @@ class Client : public cSimpleModule
        }
    }
 
+   void log_info(string to_log){
+       std::ofstream log_file("./src/client_log.txt",ios::app);
+       if(!log_file){
+           EV << "Log file can't be opened";
+           return;
+       }
+       stringstream ss;
+       log_file << "Client " << my_client_number << " " << my_id << " : " << simTime() << " " << to_log << endl;
+       log_file.close();
+       return;
+   }
+
 
    void start_task(){
        // initial task function -> no relevance as of now
@@ -394,8 +437,10 @@ void Client::initialize() {
     }
     // the client number is for finding client gates efficiently
     my_client_number = clients_available.size();
+
     // logging purpose
-    EV << my_id << " " << my_client_number << endl;
+    log_info("Client id generated");
+    EV << "Client " << my_client_number << " " << my_id << " : " << simTime() << " " << "Client id generated" << endl;
     // saving connected clients for further use
     save_my_clients(clients_available);
 
@@ -445,7 +490,7 @@ void Client::handleMessage(cMessage *cmsg)
         // if all subtasks of current task are done
         if(current_task.subtasks_done == current_task.subtasks.size()){
             consolidate_server_scores();
-            EV << "Myself Client " << my_client_number << ". I have received all subtask results " << current_task.final_result << endl;
+//            EV << "Myself Client " << my_client_number << ". I have received all subtask results " << current_task.final_result << endl;
             broadcast_scores();
             tasks_done+=1;
             if(tasks_done != 2){
@@ -461,6 +506,7 @@ void Client::handleMessage(cMessage *cmsg)
         if(msg.isError){
             return;
         }
+        log_info(cmsg->getName());
         update_server_scores(msg);
         forward_server_scores(msg,cmsg->getName());
     }
