@@ -69,7 +69,7 @@ private:
             }
         } else {
             int max_malicious = total_servers / 4;
-            
+            cout << "Server " << my_server_number << " " << max_malicious << endl;
             if (current_malicious_count >= max_malicious) { // has to be honest
                 task_malicious_decisions[subtask_id] = false;
                 return find_max(arr);
@@ -81,6 +81,7 @@ private:
             uniform_real_distribution<> dis(0.0, 1.0);
             
             bool will_be_malicious = dis(gen) < probability;
+            cout << "Server " << my_server_number << " " << will_be_malicious <<" " << subtask_id<< endl;
             task_malicious_decisions[subtask_id] = will_be_malicious;
             
             if (!will_be_malicious) {
@@ -148,7 +149,7 @@ void Server::initialize() {
         my_id = temp;
     }
     my_server_number = servers.size();
-    total_servers = servers.size();
+    total_servers = getParentModule()->getSubmoduleVectorSize("server");
     
     EV << "Server " << my_server_number << " with ID: " << my_id << " initialized" << endl;
 }

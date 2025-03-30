@@ -273,6 +273,7 @@ class Client : public cSimpleModule
        // computing the frequencies of each result
        map<int,int> freq_results;
        for(auto result: results){
+           cout << "Client " << my_client_number << " "  << result.result << endl;
            if(freq_results.find(result.result) == freq_results.end()){
                freq_results[result.result] = 1;
            } else {
@@ -283,6 +284,8 @@ class Client : public cSimpleModule
        // storing the correct result based on majority
        pair<int,int> correct_result = {0,-1};
        for(auto result: freq_results){
+
+           cout << "Client " << my_client_number << " " << result.first << " " << result.second << endl;
            if(result.second > correct_result.second){
                correct_result = result;
            }
