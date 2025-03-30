@@ -20,16 +20,14 @@ private:
     string my_id = "";
     vector<vector<string>> clients_available = {};
     
-    // Track malicious decisions per task
-    map<string, bool> task_malicious_decisions;
+    map<string, bool> is_malicious_for_task;
     
-    // Track total servers for n/4 calculation
     int total_servers = 0;
-    int current_malicious_count = 0;
+    const double probability = 0.25; 
 
     vector<SubtaskResult> subtask_history;
 
-    // get info from message; GPT-genereated
+    // get info from message
     Message parse_message(const string& msg_content) {
         // Message Format needed: <Message Type>:<client_id>:<sub_task_id>:<elements of array>(csv)
         Message msg;
@@ -60,55 +58,51 @@ private:
         return *max_element(arr.begin(), arr.end());    // value
     }
 
-    // malicious behavior
+    // process the task given to me
     int process_task(const vector<int>& arr, const string& subtask_id) {
-        // Check if decision already made for this task
-        if (task_malicious_decisions.find(subtask_id) != task_malicious_decisions.end()) {
-            if (!task_malicious_decisions[subtask_id]) {
-                return find_max(arr);
+        // Extract task_id from subtask_id (first part before last underscore)
+        string task_id = subtask_id.substr(0, subtask_id.find_last_of('_'));
+        
+        // if we've already decided for this task, maintain consistency
+        if (is_malicious_for_task.find(task_id) != is_malicious_for_task.end()) {
+            if (is_malicious_for_task[task_id]) {
+                EV << "Server " << my_server_number << " remaining malicious for task " << task_id << endl;
+                return find_malicious_result(arr);
             }
-        } else {
-            int max_malicious = total_servers / 4;
-            cout << "Server " << my_server_number << " " << max_malicious << endl;
-            if (current_malicious_count >= max_malicious) { // has to be honest
-                task_malicious_decisions[subtask_id] = false;
-                return find_max(arr);
-            }
-
-            double probability = (max_malicious - current_malicious_count) / static_cast<double>(max_malicious);
-            random_device rd;
-            mt19937 gen(rd());
-            uniform_real_distribution<> dis(0.0, 1.0);
-            
-            bool will_be_malicious = dis(gen) < probability;
-            cout << "Server " << my_server_number << " " << will_be_malicious <<" " << subtask_id<< endl;
-            task_malicious_decisions[subtask_id] = will_be_malicious;
-            
-            if (!will_be_malicious) {
-                return find_max(arr);
-            }
-            current_malicious_count++;
+            return find_max(arr);
         }
 
-        // generate the malicious result
-        int actual_max = find_max(arr);
-        vector<int> possible_wrong_results;
-        
-        for (int val : arr) {
-            if (val != actual_max) {
-                possible_wrong_results.push_back(val);
-            }
-        }
-        
-        if (possible_wrong_results.empty()) {   // in cases of single element array as input, we won't have any other elements
-            return actual_max - 1;
-        }
-        
-        // in all other cases, return random number not equal to max
+        // else, make new decision for this task
         random_device rd;
         mt19937 gen(rd());
-        uniform_int_distribution<> dis(0, possible_wrong_results.size() - 1);
-        return possible_wrong_results[dis(gen)];
+        uniform_real_distribution<> dis(0.0, 1.0);
+        
+        bool will_be_malicious = (dis(gen) < probability);
+        is_malicious_for_task[task_id] = will_be_malicious;
+        
+        if (will_be_malicious) {
+            EV << "Server " << my_server_number << " decided to be malicious for task " << task_id << endl;
+            return find_malicious_result(arr);
+        }
+
+        return find_max(arr);
+    }
+
+    // malicious result generation
+    int find_malicious_result(const vector<int>& arr) {
+        if (arr.empty()) return 0;
+        
+        int actual_max = find_max(arr);
+        
+        // Always return  wrong (minimum, it'll be wrong since each server gets subtask with subarray size of >=2)
+        if (arr.size() > 1) {
+
+            int min_val = *min_element(arr.begin(), arr.end());
+            return min_val;
+        }
+        
+        // if by chance, server gets only one element and still it has to act malicious, it'll return half
+        return actual_max / 2;
     }
 
     pair<string,int> create_response(const Message& original_msg, int result) {
@@ -125,7 +119,6 @@ private:
         }
     }
 
-    // GPT-genereated
     void log_result(const SubtaskResult& result) {
         // To console
         EV << "Server " << my_server_number << " computed max: " << result.result << " for task: " << result.subtask_id << endl;
@@ -171,7 +164,6 @@ void Server::handleMessage(cMessage *msg) {
 
     pair<string,int> response = create_response(parsed_msg, result);
     cMessage *response_msg = new cMessage(response.first.c_str());
-    send(response_msg,"outClientGates",response.second);
+    send(response_msg, "outClientGates", response.second);
 
     delete msg;
-}
