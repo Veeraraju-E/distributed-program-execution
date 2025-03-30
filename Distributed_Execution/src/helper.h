@@ -7,6 +7,9 @@
 
 using namespace std;
 
+// the same global malicious_count from helper.cc
+extern int global_malicious_count;
+
 string generate_hash(const string &input);
 string create_server(int server_number);
 string create_client(int client_number);

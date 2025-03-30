@@ -14,6 +14,9 @@
 
 using namespace std;
 
+// made the malicious count global
+int global_malicious_count = 0;
+
 string generate_hash(const string &input) {
     hash<string> hash_fn;
     size_t hash_value = hash_fn(input);
@@ -167,4 +170,3 @@ vector<vector<string>> fetch_clients() {
 //         cout << server[0] << " " << server[1] << endl;
 //     }
 // }
-
