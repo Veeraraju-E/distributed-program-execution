@@ -1,3 +1,11 @@
+/*
+ * © B22CS080 - Veeraraju Elluru, B22CS052 - Sumeet S Patil
+ * This file is has original work. All rights are reserved under the jurisdiction of IIT Jodhpur
+ */
+
+
+
+
 #include <string>
 #include <omnetpp.h>
 #include <vector>
@@ -11,10 +19,6 @@
 using namespace omnetpp;
 
 class Server : public cSimpleModule {
-
-public:
-    Server();
-    ~Server();
 
 protected:
     virtual void initialize() override;
@@ -129,8 +133,8 @@ private:
         EV << "Server " << my_server_number << " computed max: " << result.result << " for task: " << result.subtask_id << endl;
 
         // To file
-        string filename = "output.txt";
-        ofstream outfile(filename);
+        string filename = "./src/output.txt";
+        ofstream outfile(filename,ios::app);
         if (outfile.is_open()) {
             outfile << "Task: " << result.subtask_id << ", Max: " << result.result << ", Time: " << result.timestamp.str() << endl;
             outfile.close();
@@ -179,4 +183,5 @@ void Server::handleMessage(cMessage *msg) {
     cMessage *response_msg = new cMessage(response.first.c_str());
     send(response_msg, "outClientGates", response.second);
 
-    delete msg;
+
+}

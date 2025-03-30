@@ -1,3 +1,8 @@
+/*
+ * © B22CS080 - Veeraraju Elluru, B22CS052 - Sumeet S Patil
+ * This file is has original work. All rights are reserved under the jurisdiction of IIT Jodhpur
+ */
+
 #include <string>
 #include <omnetpp.h>
 #include <vector>
@@ -9,7 +14,7 @@
 #include <chrono>
 #include <fstream>
 
-#define MAX_ELEMENT_OF_ARRAY 10000000007
+#define MAX_ELEMENT_OF_ARRAY 1000
 
 using namespace omnetpp;
 
@@ -34,10 +39,6 @@ using namespace omnetpp;
 
 class Client : public cSimpleModule
 {
-  public:
-
-    Client();
-    ~Client();
 
   protected:
     // The following redefined virtual function holds the algorithm.
@@ -297,14 +298,14 @@ class Client : public cSimpleModule
                correct_result = result;
            }
        }
-
+       EV << "Client " << my_client_number << " " << "Subtask "+subtask.subtask_id+" result is: "+to_string(correct_result.first)+" with vote of "+to_string(correct_result.second) << endl;
        log_info("Subtask "+subtask.subtask_id+" result is: "+to_string(correct_result.first)+" with vote of "+to_string(correct_result.second));
 
        // updating the task's final result also based on this
        if(current_task.final_result < correct_result.first){
            current_task.final_result = correct_result.first;
        }
-
+       EV << "Client " << my_client_number << " " << "Task" + to_string(tasks_done+1) + " result updated to "+to_string(current_task.final_result) << endl;
        log_info("Task" + to_string(tasks_done+1) + " result updated to "+to_string(current_task.final_result));
 
        // updating whether the server's response was wrong (malicious) or not
@@ -410,7 +411,7 @@ class Client : public cSimpleModule
    }
 
    void log_info(string to_log){
-       std::ofstream log_file("./src/client_log.txt",ios::app);
+       std::ofstream log_file("./src/client_output.txt",ios::app);
        if(!log_file){
            EV << "Log file can't be opened";
            return;
@@ -476,7 +477,7 @@ void Client::handleMessage(cMessage *cmsg)
                 return;
             }
 
-        EV << "Hello from client " << my_client_number << endl;
+//        EV << "Hello from client " << my_client_number << endl;
 
         // if this is the first server to send subtask result
         if(current_task.subtask_results.find(msg.subtaskresult.subtask_id) == current_task.subtask_results.end()){
@@ -491,7 +492,7 @@ void Client::handleMessage(cMessage *cmsg)
 
         // Implies all subtask responses are received
         if(current_task.subtask_results[msg.subtaskresult.subtask_id].size() == current_task.servers_targeted.size()){
-            cout << "Hello in subtask completion" << endl;
+//            cout << "Hello in subtask completion" << endl;
 //            EV << "Client " << my_client_number << "received message " << cmsg->getName() << endl;
 
             // update the task result based on the completed subtask
@@ -499,7 +500,7 @@ void Client::handleMessage(cMessage *cmsg)
             current_task.subtasks_done+=1;
 
             // logging purpose
-            EV << "Client " << my_client_number << " " << current_task.final_result << endl;
+//            EV << "Client " << my_client_number << " " << current_task.final_result << endl;
         }
 
         // if all subtasks of current task are done

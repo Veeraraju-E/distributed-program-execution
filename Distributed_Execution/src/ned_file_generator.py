@@ -1,4 +1,9 @@
-with open("./src/topo.txt", "r") as topo_file:
+"""
+© B22CS080 - Veeraraju Elluru, B22CS052 - Sumeet S Patil
+This file is has original work. All rights are reserved under the jurisdiction of IIT Jodhpur
+ """
+
+with open("topo.txt", "r") as topo_file:
     network_parameters = topo_file.readlines()
 
 # Extract the number of servers and clients
@@ -7,6 +12,10 @@ _, _, no_clients = network_parameters[1].split(" ")
 
 no_servers, no_clients = int(no_servers), int(no_clients)
 
+copy_rights = """
+ // © B22CS080 - Veeraraju Elluru, B22CS052 - Sumeet S Patil
+ // This file is has original work. All rights are reserved under the jurisdiction of IIT Jodhpur
+ """
 
 Client_Module = f"""simple Client
 {{
@@ -49,8 +58,8 @@ network Network_Setup
 }}
 """
 
-ned_content = Server_Module + "\n" + Client_Module + "\n" + Network_Module
-with open("Network_Setup.ned", "w") as ned_file:
+ned_content = copy_rights + "\n" + Server_Module + "\n" + Client_Module + "\n" + Network_Module
+with open("../Network_Setup.ned", "w") as ned_file:
     ned_file.write(ned_content)
 
 server_connections = ["\nServers:\n{"]
@@ -67,5 +76,5 @@ for i in range(no_clients):
 client_connections.append("}\n")
 
 
-with open("./src/topo.txt", "a") as topo_file:
+with open("topo.txt", "a") as topo_file:
     topo_file.write("\n".join(server_connections) + "\n" + "\n".join(client_connections) + "\n")

@@ -1,3 +1,8 @@
+/*
+ * © B22CS080 - Veeraraju Elluru, B22CS052 - Sumeet S Patil
+ * This file is has original work. All rights are reserved under the jurisdiction of IIT Jodhpur
+ */
+
 #ifndef HELPER_H
 #define HELPER_H
 
