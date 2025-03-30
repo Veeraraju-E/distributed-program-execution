@@ -34,6 +34,11 @@ using namespace omnetpp;
 
 class Client : public cSimpleModule
 {
+  public:
+
+    Client();
+    ~Client();
+
   protected:
     // The following redefined virtual function holds the algorithm.
     virtual void initialize() override;
@@ -46,6 +51,8 @@ class Client : public cSimpleModule
         string subtask_id;
         vector<int> input;
     };
+
+
 
     // needed to efficiently handle task
     struct Task{
@@ -426,6 +433,12 @@ class Client : public cSimpleModule
 Define_Module(Client);
 
 void Client::initialize() {
+
+    int clientIndex = getIndex();
+    std::string pos = "p=" + std::to_string(100 + clientIndex * 200) + ",300";
+    getDisplayString().parse(pos.c_str());
+    getDisplayString().setTagArg("i", 0, "block/laptop");
+
     // a check to ensure that servers are initialized first and then client
     while(servers_connected.size() == 0){
         servers_connected = fetch_servers();
@@ -456,7 +469,6 @@ void Client::initialize() {
 void Client::handleMessage(cMessage *cmsg)
 {
     Message msg = parse_message(cmsg->getName());
-
 
     if(msg.type == SUBTASK_RESPONSE){
 

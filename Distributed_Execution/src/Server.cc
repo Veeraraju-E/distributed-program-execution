@@ -11,6 +11,11 @@
 using namespace omnetpp;
 
 class Server : public cSimpleModule {
+
+public:
+    Server();
+    ~Server();
+
 protected:
     virtual void initialize() override;
     virtual void handleMessage(cMessage *msg) override;
@@ -143,6 +148,12 @@ private:
 Define_Module(Server);
 
 void Server::initialize() {
+
+    int serverIndex = getIndex();
+    std::string pos = "p=" + std::to_string(100 + serverIndex * 200) + ",100";
+    getDisplayString().parse(pos.c_str());
+    getDisplayString().setTagArg("i", 0, "block/server");
+
     vector<vector<string>> servers = fetch_servers();
     string temp = create_server(servers.size());
     if(temp != "None") {
@@ -155,6 +166,8 @@ void Server::initialize() {
 }
 
 void Server::handleMessage(cMessage *msg) {
+
+
     string msg_content = msg->getName();
     EV << "Server " << my_server_number << " received message: " << msg_content << endl;
 

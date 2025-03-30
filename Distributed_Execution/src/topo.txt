@@ -1,0 +1,170 @@
+n = 5
+m = 10
+
+Servers:
+{
+    Server 0 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 1 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 2 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 3 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 4 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+}
+
+Clients:
+{
+    Client 0 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 1, Client 3],
+    Client 1 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 2, Client 4],
+    Client 2 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 3, Client 5],
+    Client 3 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 4, Client 6],
+    Client 4 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 5, Client 7],
+    Client 5 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 6, Client 8],
+    Client 6 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 7, Client 9],
+    Client 7 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 8, Client 0],
+    Client 8 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 9, Client 1],
+    Client 9 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 0, Client 2],
+}
+
+
+Servers:
+{
+    Server 0 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 1 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 2 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 3 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 4 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+}
+
+Clients:
+{
+    Client 0 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 1, Client 3],
+    Client 1 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 2, Client 4],
+    Client 2 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 3, Client 5],
+    Client 3 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 4, Client 6],
+    Client 4 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 5, Client 7],
+    Client 5 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 6, Client 8],
+    Client 6 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 7, Client 9],
+    Client 7 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 8, Client 0],
+    Client 8 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 9, Client 1],
+    Client 9 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 0, Client 2],
+}
+
+
+Servers:
+{
+    Server 0 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 1 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 2 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 3 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 4 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+}
+
+Clients:
+{
+    Client 0 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 1, Client 3],
+    Client 1 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 2, Client 4],
+    Client 2 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 3, Client 5],
+    Client 3 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 4, Client 6],
+    Client 4 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 5, Client 7],
+    Client 5 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 6, Client 8],
+    Client 6 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 7, Client 9],
+    Client 7 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 8, Client 0],
+    Client 8 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 9, Client 1],
+    Client 9 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 0, Client 2],
+}
+
+
+Servers:
+{
+    Server 0 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 1 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 2 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 3 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 4 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+}
+
+Clients:
+{
+    Client 0 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 1, Client 3],
+    Client 1 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 2, Client 4],
+    Client 2 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 3, Client 5],
+    Client 3 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 4, Client 6],
+    Client 4 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 5, Client 7],
+    Client 5 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 6, Client 8],
+    Client 6 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 7, Client 9],
+    Client 7 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 8, Client 0],
+    Client 8 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 9, Client 1],
+    Client 9 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 0, Client 2],
+}
+
+
+Servers:
+{
+    Server 0 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 1 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 2 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 3 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 4 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+}
+
+Clients:
+{
+    Client 0 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 1, Client 3],
+    Client 1 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 2, Client 4],
+    Client 2 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 3, Client 5],
+    Client 3 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 4, Client 6],
+    Client 4 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 5, Client 7],
+    Client 5 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 6, Client 8],
+    Client 6 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 7, Client 9],
+    Client 7 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 8, Client 0],
+    Client 8 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 9, Client 1],
+    Client 9 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 0, Client 2],
+}
+
+
+Servers:
+{
+    Server 0 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 1 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 2 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 3 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 4 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+}
+
+Clients:
+{
+    Client 0 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 1, Client 3],
+    Client 1 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 2, Client 4],
+    Client 2 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 3, Client 5],
+    Client 3 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 4, Client 6],
+    Client 4 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 5, Client 7],
+    Client 5 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 6, Client 8],
+    Client 6 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 7, Client 9],
+    Client 7 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 8, Client 0],
+    Client 8 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 9, Client 1],
+    Client 9 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 0, Client 2],
+}
+
+
+Servers:
+{
+    Server 0 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 1 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 2 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 3 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+    Server 4 : [Client 0, Client 1, Client 2, Client 3, Client 4, Client 5, Client 6, Client 7, Client 8, Client 9],
+}
+
+Clients:
+{
+    Client 0 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 1, Client 3],
+    Client 1 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 2, Client 4],
+    Client 2 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 3, Client 5],
+    Client 3 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 4, Client 6],
+    Client 4 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 5, Client 7],
+    Client 5 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 6, Client 8],
+    Client 6 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 7, Client 9],
+    Client 7 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 8, Client 0],
+    Client 8 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 9, Client 1],
+    Client 9 : [Server 0, Server 1, Server 2, Server 3, Server 4, Client 0, Client 2],
+}
+
