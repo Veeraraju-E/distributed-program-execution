@@ -11977,6 +11977,11 @@ scipy.stats.tests.test_survival|/usr/lib/python3/dist-packages/scipy/stats/tests
 scipy.stats.tests.test_tukeylambda_stats|/usr/lib/python3/dist-packages/scipy/stats/tests/test_tukeylambda_stats.py
 scipy.stats.tests.test_variation|/usr/lib/python3/dist-packages/scipy/stats/tests/test_variation.py
 scipy.version|/usr/lib/python3/dist-packages/scipy/version.py
+scour.__init__|/usr/lib/python3/dist-packages/scour/__init__.py
+scour.scour|/usr/lib/python3/dist-packages/scour/scour.py
+scour.svg_regex|/usr/lib/python3/dist-packages/scour/svg_regex.py
+scour.svg_transform|/usr/lib/python3/dist-packages/scour/svg_transform.py
+scour.yocto_css|/usr/lib/python3/dist-packages/scour/yocto_css.py
 seaborn.__init__|/usr/lib/python3/dist-packages/seaborn/__init__.py
 seaborn._base|/usr/lib/python3/dist-packages/seaborn/_base.py
 seaborn._compat|/usr/lib/python3/dist-packages/seaborn/_compat.py
