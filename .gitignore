@@ -31,3 +31,4 @@ Distributed_Execution/.settings/
 Distributed_Execution/.vscode/
 Distributed_Execution/src/Assignment-2.md
 Distributed_Execution/out/
+*.o
